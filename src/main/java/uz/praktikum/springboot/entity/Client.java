@@ -16,6 +16,45 @@ public class Client implements Serializable {
 
     private Boolean archive = false;
 
+    @OneToOne
+    @JoinColumn(name = "passport_id", unique = true, nullable = false)
+    private Passport passport;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public void setArchive(Boolean archive) {
+        this.archive = archive;
+    }
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     @OneToOne
     @JoinColumn(name = "employee_id", unique = true, nullable = false)

@@ -3,8 +3,10 @@ package uz.praktikum.springboot.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.praktikum.springboot.entity.Employee;
+import uz.praktikum.springboot.entity.enumration.EmployeeStatus;
 import uz.praktikum.springboot.repository.EmployeeRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ public class EmployeeService {
     }
 
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAllByEmployeeStatus(EmployeeStatus.ACTIVE);
     }
 
     public Employee findById(Long id) {
@@ -40,6 +42,8 @@ public class EmployeeService {
 
 
     public void delete(Long id) {
-        employeeRepository.deleteById(id);
+        Employee employee=employeeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        employee.setEmployeeStatus(EmployeeStatus.DRAFT);
+        save(employee);
     }
 }

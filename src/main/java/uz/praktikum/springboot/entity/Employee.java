@@ -20,6 +20,18 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public Employee(String login, String password, Boolean activated, Department department, EmployeeStatus employeeStatus, EmployeePosition employeePosition, Float salary, Passport passport, Set<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.activated = activated;
+        this.department = department;
+        this.employeeStatus = employeeStatus;
+        this.employeePosition = employeePosition;
+        this.salary = salary;
+        this.passport = passport;
+        this.roles = roles;
+    }
+
     @NotNull
     @Size(min = 4, max = 50)
     @Column(length = 50, unique = true, nullable = false)
@@ -46,8 +58,8 @@ public class Employee implements Serializable {
     private Float salary;
 
     @OneToOne
-    @JoinColumn(name = "detail_id", unique = true, nullable = false)
-    private Detail detail;
+    @JoinColumn(name = "passport_id", unique = true, nullable = false)
+    private Passport passport;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -63,6 +75,9 @@ public class Employee implements Serializable {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    public Employee() {
+    }
 
     public Long getId() {
         return id;
@@ -132,13 +147,7 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
-    public Detail getDetail() {
-        return detail;
-    }
 
-    public void setDetail(Detail detail) {
-        this.detail = detail;
-    }
 
     public Set<Role> getRoles() {
         return roles;
