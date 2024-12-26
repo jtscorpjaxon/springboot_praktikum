@@ -1,5 +1,6 @@
 package uz.praktikum.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import uz.praktikum.springboot.entity.enumration.EmployeePosition;
@@ -64,10 +65,10 @@ public class Employee implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "employee_role",
-            joinColumns = {@JoinColumn(name = "employee_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName = "id")}
+            joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Set<Role> roles=new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
 
     @CreationTimestamp
@@ -99,6 +100,7 @@ public class Employee implements Serializable {
         this.login = login;
     }
 
+    @JsonIgnore
     public @NotNull @Size(min = 20, max = 60) String getPassword() {
         return password;
     }
@@ -146,7 +148,6 @@ public class Employee implements Serializable {
     public void setSalary(Float salary) {
         this.salary = salary;
     }
-
 
 
     public Set<Role> getRoles() {

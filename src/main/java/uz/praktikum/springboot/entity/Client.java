@@ -1,5 +1,6 @@
 package uz.praktikum.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -31,7 +32,7 @@ public class Client implements Serializable {
     public Instant getUpdatedAt() {
         return updatedAt;
     }
-
+    @JsonIgnore
     public Boolean getArchive() {
         return archive;
     }
