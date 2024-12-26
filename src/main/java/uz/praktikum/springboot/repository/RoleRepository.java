@@ -6,6 +6,6 @@ import uz.praktikum.springboot.entity.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findByName(String name);
-    Boolean existsByName(String name);
+    Role findByApiName(String name);
+    Boolean existsByApiName(String name);
 }

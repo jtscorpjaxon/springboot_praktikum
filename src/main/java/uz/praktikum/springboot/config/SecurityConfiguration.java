@@ -3,6 +3,7 @@ package uz.praktikum.springboot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,10 +33,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/clients/**").hasAnyAuthority("PERMISSION_READ", "PERMISSION_CREATE", "PERMISSION_UPDATE", "PERMISSION_DELETE")
-                .antMatchers("/api/employees/**").hasAnyAuthority("PERMISSION_READ", "PERMISSION_CREATE", "PERMISSION_UPDATE", "PERMISSION_DELETE")
-                .antMatchers("/api/sales/**").hasAnyAuthority("PERMISSION_READ", "PERMISSION_CREATE", "PERMISSION_UPDATE", "PERMISSION_DELETE")
-                .antMatchers("/api/statistics/**").hasAuthority("PERMISSION_STATISTICS")
+                // Clients  API access control
+                .antMatchers(HttpMethod.GET, "/api/clients/**").hasAnyAuthority("CLIENTS_READ")
+                .antMatchers(HttpMethod.POST, "/api/clients/**").hasAnyAuthority("CLIENTS_CREATE")
+                .antMatchers(HttpMethod.PUT, "/api/clients/**").hasAnyAuthority("CLIENTS_UPDATE")
+                .antMatchers(HttpMethod.DELETE, "/api/clients/**").hasAnyAuthority("CLIENTS_DELETE")
+                // Employees API access control
+                .antMatchers(HttpMethod.GET, "/api/employees/**").hasAuthority("EMPLOYEES_READ")
+                .antMatchers(HttpMethod.POST, "/api/employees/**").hasAuthority("EMPLOYEES_CREATE")
+                .antMatchers(HttpMethod.PUT, "/api/employees/**").hasAuthority("EMPLOYEES_UPDATE")
+                .antMatchers(HttpMethod.DELETE, "/api/employees/**").hasAuthority("EMPLOYEES_DELETE")
+                // Sales API access control
+                .antMatchers(HttpMethod.GET, "/api/sales/**").hasAuthority("SALES_READ")
+                .antMatchers(HttpMethod.POST, "/api/sales/**").hasAuthority("SALES_CREATE")
+                .antMatchers(HttpMethod.PUT, "/api/sales/**").hasAuthority("SALES_UPDATE")
+                .antMatchers(HttpMethod.DELETE, "/api/sales/**").hasAuthority("SALES_DELETE")
+                .antMatchers("/api/statistics/clients").hasAuthority("CLIENTS_STATISTICS")
+                .antMatchers("/api/statistics/employees").hasAuthority("EMPLOYEES_STATISTICS")
+                .antMatchers("/api/statistics/sales").hasAuthority("SALES_STATISTICS")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

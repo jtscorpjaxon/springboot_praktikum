@@ -10,9 +10,8 @@ import java.util.*;
 @Entity
 public class Role implements Serializable {
 
-    public Role(String name, EmployeePosition employeePosition, Boolean canCreate, Boolean canRead, Boolean canUpdate, Boolean canDelete, Boolean hasStatisticsAccess) {
-        this.name = name;
-        this.employeePosition = employeePosition;
+    public Role(String apiName, Boolean canCreate, Boolean canRead, Boolean canUpdate, Boolean canDelete, Boolean hasStatisticsAccess) {
+        this.apiName = apiName;
         this.canCreate = canCreate;
         this.canRead = canRead;
         this.canUpdate = canUpdate;
@@ -24,10 +23,11 @@ public class Role implements Serializable {
     }
 
     @Id
-    @NotNull
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private EmployeePosition employeePosition;
+    @Column(nullable = false)
+    private String apiName;
 
     @Column(nullable = false)
     private Boolean canCreate;
@@ -44,13 +44,23 @@ public class Role implements Serializable {
     @Column(nullable = false)
     private Boolean hasStatisticsAccess;
 
-    public @NotNull String getName() {
-        return name;
+    public String getApiName() {
+        return apiName;
     }
 
-    public void setName(@NotNull String name) {
-        this.name = name;
+    public void setApiName(String apiName) {
+        this.apiName = apiName;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 
     public Boolean isCanCreate() {
         return canCreate;

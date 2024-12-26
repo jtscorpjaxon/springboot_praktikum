@@ -28,13 +28,13 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Role clientRole = roleService.save(new Role("Client", EmployeePosition.DIRECTOR, true, true, true, true, true));
-        Role salesRole = roleService.save(new Role("Sales", EmployeePosition.DIRECTOR, true, true, true, true, true));
-        Role employeeRole = roleService.save(new Role("Employee", EmployeePosition.DIRECTOR, true, true, true, true, true));
+      Role clientRole = roleService.save(new Role("Clients",  true, true, true, true, true));
+        Role salesRole = roleService.save(new Role("Sales", true, true, true, true, true));
+        Role employeeRole = roleService.save(new Role("Employees",  true, true, true, true, true));
 
-        Role clientCRU = roleService.save(new Role("Client_CRU", EmployeePosition.DIRECTOR, true, true, true, false, false));
-        Role salesCRU = roleService.save(new Role("Sales_CRU", EmployeePosition.DIRECTOR, true, true, true, false, false));
-        Role employeeCRU = roleService.save(new Role("Employee_CRU", EmployeePosition.DIRECTOR, true, true, true, false, false));
+        Role clientCRU = roleService.save(new Role("Clients", true, true, true, false, false));
+        Role salesCRU = roleService.save(new Role("Sales",  true, true, true, false, false));
+        Role employeeCRU = roleService.save(new Role("Employees",  true, true, true, false, false));
 
 
         Set<Role> directorRoles = new HashSet<>();

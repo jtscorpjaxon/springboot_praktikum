@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.*;
 import org.springframework.stereotype.Component;
 import uz.praktikum.springboot.entity.Employee;
+import uz.praktikum.springboot.entity.Role;
 import uz.praktikum.springboot.repository.EmployeeRepository;
 
 @Component
@@ -28,7 +29,23 @@ public class CustomUserDetailService implements UserDetailsService {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 List<GrantedAuthority> authorities = new ArrayList<>();
+                Set<Role> role = employee.getRoles();
+                for(Role role_item : role) {
+                    String roleName = role_item.getApiName().toUpperCase();
+                    if(role_item.isCanCreate()){
+                        authorities.add(new SimpleGrantedAuthority(roleName+"_CREATE"));
+                    }
+                    if(role_item.isCanUpdate()){
+                        authorities.add(new SimpleGrantedAuthority(roleName+"_UPDATE"));
+                    }
+                    if(role_item.isCanDelete()){
+                        authorities.add(new SimpleGrantedAuthority(roleName+"_DELETE"));
+                    }
 
+                    if(role_item.isHasStatisticsAccess()){
+                        authorities.add(new SimpleGrantedAuthority(roleName+"_STATISTICS"));
+                    }
+                }
 
                 return authorities;
 

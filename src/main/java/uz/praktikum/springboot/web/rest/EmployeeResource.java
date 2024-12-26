@@ -1,5 +1,6 @@
 package uz.praktikum.springboot.web.rest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -18,35 +19,46 @@ public class EmployeeResource {
     }
 
     @GetMapping("/employees")
-    public ResponseEntity getAll(Authentication authentication){
-        List <Employee> result = employeeService.findAll();
+    public ResponseEntity getAll(Authentication authentication) {
+        List<Employee> result = employeeService.findAll(authentication);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/employees")
-    public ResponseEntity create(@RequestBody Employee employee){
-        Employee result= employeeService.save(employee);
-        return ResponseEntity.ok(result);
-    }
-    @PutMapping("/employees")
-    public ResponseEntity update(@RequestBody Employee employee){
-        if(employee.getId()==null){
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity create(Authentication authentication,
+                                 @RequestBody Employee employee) {
+        if (employeeService.getAccess(authentication)) {
+            Employee result = employeeService.save(employee);
+            return ResponseEntity.ok(result);
         }
-        Employee result= employeeService.save(employee);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied: You do not have the required role.");
+    }
+
+    @PutMapping("/employees")
+    public ResponseEntity update(Authentication authentication,
+                                 @RequestBody Employee employee) {
+        if (employeeService.getAccess(authentication)) {
+            if (employee.getId() == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            Employee result = employeeService.save(employee);
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied: You do not have the required role.");
+
     }
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getOne(@PathVariable Long id){
-        Employee result = employeeService.findById(id);
+    public ResponseEntity<Employee> getOne(Authentication authentication,
+                                           @PathVariable Long id) {
+        Employee result = employeeService.findById(authentication, id);
         return ResponseEntity.ok(result);
     }
 
 
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
-        employeeService.delete(id);
+    public ResponseEntity delete(Authentication authentication, @PathVariable Long id) {
+        employeeService.delete(authentication, id);
         return ResponseEntity.ok("O'chdi");
 
     }
