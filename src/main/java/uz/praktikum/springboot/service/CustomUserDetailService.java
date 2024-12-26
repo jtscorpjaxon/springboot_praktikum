@@ -6,7 +6,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import java.util.*;
+
 import org.springframework.stereotype.Component;
 import uz.praktikum.springboot.entity.Employee;
 import uz.praktikum.springboot.entity.Role;
@@ -30,23 +32,26 @@ public class CustomUserDetailService implements UserDetailsService {
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 Set<Role> role = employee.getRoles();
-                for(Role role_item : role) {
+                for (Role role_item : role) {
                     String roleName = role_item.getApiName().toUpperCase();
-                    if(role_item.isCanCreate()){
-                        authorities.add(new SimpleGrantedAuthority(roleName+"_CREATE"));
+                    if (role_item.isCanRead()) {
+                        authorities.add(new SimpleGrantedAuthority(roleName + "_READ"));
                     }
-                    if(role_item.isCanUpdate()){
-                        authorities.add(new SimpleGrantedAuthority(roleName+"_UPDATE"));
+                    if (role_item.isCanCreate()) {
+                        authorities.add(new SimpleGrantedAuthority(roleName + "_CREATE"));
                     }
-                    if(role_item.isCanDelete()){
-                        authorities.add(new SimpleGrantedAuthority(roleName+"_DELETE"));
+                    if (role_item.isCanUpdate()) {
+                        authorities.add(new SimpleGrantedAuthority(roleName + "_UPDATE"));
+                    }
+                    if (role_item.isCanDelete()) {
+                        authorities.add(new SimpleGrantedAuthority(roleName + "_DELETE"));
                     }
 
-                    if(role_item.isHasStatisticsAccess()){
-                        authorities.add(new SimpleGrantedAuthority(roleName+"_STATISTICS"));
+                    if (role_item.isHasStatisticsAccess()) {
+                        authorities.add(new SimpleGrantedAuthority(roleName + "_STATISTICS"));
                     }
                 }
-
+                System.out.println("Authorities: " + authorities);
                 return authorities;
 
             }

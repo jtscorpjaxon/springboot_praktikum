@@ -1,0 +1,119 @@
+### Clients API
+
+# Create a new client
+POST http://127.0.0.1:8081/api/clients
+Content-Type: application/json
+
+{
+  "archive": false,
+  "passport": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "middleName": "A",
+    "age": 30,
+    "address": "123 Main St",
+    "passportSerial": "AB123",
+    "passportNumber": "123456789",
+    "JSHSHIR": "12345678901234",
+    "nation": "Nation"
+  },
+  "employee": {
+    "login": "johndoe",
+    "password": "securepassword",
+    "activated": true,
+    "department": {
+      "name": "IT"
+    },
+    "employeeStatus": "ACTIVE",
+    "employeePosition": "MANAGER",
+    "salary": 50000
+  }
+}
+###
+# Get all clients
+GET http://127.0.0.1:8081/api/clients
+###
+# Update a client
+PUT http://127.0.0.1:8081/api/clients/{id}
+Content-Type: application/json
+
+{
+"archive": true
+}
+###
+# Delete a client
+DELETE http://127.0.0.1:8081/api/clients/{id}
+
+### Employees API
+
+# Create a new employee
+POST http://127.0.0.1:8081/api/employees
+Content-Type: application/json
+
+{
+  "login": "janedoe",
+  "password": "anothersecurepassword",
+  "activated": true,
+  "department": {
+    "name": "HR"
+  },
+  "employeeStatus": "ACTIVE",
+  "employeePosition": "STAFF",
+  "salary": 40000,
+  "passport": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "middleName": "B",
+    "age": 28,
+    "address": "456 Elm St",
+    "passportSerial": "CD456",
+    "passportNumber": "987654321",
+    "JSHSHIR": "23456789012345",
+    "nation": "Nation"
+  }
+}
+###
+# Get all employees
+GET http://127.0.0.1:8081/api/employees
+Authorization: Basic "jaxongir@gmail.com" "14554526"
+###
+# Update an employee
+PUT http://127.0.0.1:8081/api/employees/{id}
+Content-Type: application/json
+
+{
+"salary": 45000
+}
+###
+# Delete an employee
+DELETE http://127.0.0.1:8081/api/employees/{id}
+
+### Sales API
+
+# Create a new sale
+POST http://127.0.0.1:8081/api/sales
+Content-Type: application/json
+
+{
+  "amount": 1000.0,
+  "duration": "2023-10-01T00:00:00Z",
+  "adsType": "ONLINE",
+  "beginDate": "2023-10-01T00:00:00Z",
+  "employee": {
+    "id": 1
+  }
+}
+###
+# Get all sales
+GET http://127.0.0.1:8081/api/sales
+###
+# Update a sale
+PUT http://127.0.0.1:8081/api/sales/{id}
+Content-Type: application/json
+
+{
+"amount": 1200.0
+}
+###
+# Delete a sale
+DELETE http://127.0.0.1:8081/api/sales/{id}
