@@ -64,6 +64,7 @@ public class DataLoader implements CommandLineRunner {
 
         Department departmentIT = departmentService.save(new Department("IT"));
         Department departmentHR = departmentService.save(new Department("HR"));
+        Department departmentClients = departmentService.save(new Department("Clients"));
         Department departmentSales = departmentService.save(new Department("Sales"));
 
         Employee director = employeeService.save(new Employee(
@@ -74,13 +75,19 @@ public class DataLoader implements CommandLineRunner {
                 "department_head_admin", "123456",
                 true,departmentHR, EmployeeStatus.ACTIVE,EmployeePosition.DEPARTMENT_HEAD,
                 1500f, passportDepartmentHead, departmentHeadRoles));
+        
         Employee employee = employeeService.save(new Employee(
-                "employee_admin", "123456",
+                "client_admin", "123456",
+                true,departmentClients, EmployeeStatus.ACTIVE,EmployeePosition.EMPLOYEE,
+                1000f, passportEmployee, employeeRoles));
+        Employee sales=employeeService.save(new Employee(
+                "sales_admin", "123456",
                 true,departmentSales, EmployeeStatus.ACTIVE,EmployeePosition.EMPLOYEE,
                 1000f, passportEmployee, employeeRoles));
 
-        employeeService.save(employee);
-        employeeService.save(departmentHead);
         employeeService.save(director);
+        employeeService.save(departmentHead);
+        employeeService.save(employee);
+        employeeService.save(sales);
     }
 }

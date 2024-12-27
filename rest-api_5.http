@@ -1,3 +1,48 @@
+
+### Employees API
+
+# Create a new employee
+POST http://127.0.0.1:8081/api/employees
+Content-Type: application/json
+
+{
+  "login": "janedoe",
+  "password": "anothersecurepassword",
+  "activated": true,
+  "department": {
+    "name": "HR"
+  },
+  "employeeStatus": "ACTIVE",
+  "employeePosition": "STAFF",
+  "salary": 40000,
+  "passport": {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "middleName": "B",
+    "age": 28,
+    "address": "456 Elm St",
+    "passportSerial": "CD456",
+    "passportNumber": "987654321",
+    "JSHSHIR": "23456789012345",
+    "nation": "Nation"
+  }
+}
+###
+# Get all employees
+GET http://127.0.0.1:8081/api/employees
+Authorization: Basic "jaxongir@gmail.com" "14554526"
+###
+# Update an employee
+PUT http://127.0.0.1:8081/api/employees/{id}
+Content-Type: application/json
+
+{
+  "salary": 45000
+}
+###
+# Delete an employee
+DELETE http://127.0.0.1:8081/api/employees/{id}
+
 ### Clients API
 
 # Create a new client
@@ -44,49 +89,6 @@ Content-Type: application/json
 # Delete a client
 DELETE http://127.0.0.1:8081/api/clients/{id}
 
-### Employees API
-
-# Create a new employee
-POST http://127.0.0.1:8081/api/employees
-Content-Type: application/json
-
-{
-  "login": "janedoe",
-  "password": "anothersecurepassword",
-  "activated": true,
-  "department": {
-    "name": "HR"
-  },
-  "employeeStatus": "ACTIVE",
-  "employeePosition": "STAFF",
-  "salary": 40000,
-  "passport": {
-    "firstName": "Jane",
-    "lastName": "Doe",
-    "middleName": "B",
-    "age": 28,
-    "address": "456 Elm St",
-    "passportSerial": "CD456",
-    "passportNumber": "987654321",
-    "JSHSHIR": "23456789012345",
-    "nation": "Nation"
-  }
-}
-###
-# Get all employees
-GET http://127.0.0.1:8081/api/employees
-Authorization: Basic "jaxongir@gmail.com" "14554526"
-###
-# Update an employee
-PUT http://127.0.0.1:8081/api/employees/{id}
-Content-Type: application/json
-
-{
-"salary": 45000
-}
-###
-# Delete an employee
-DELETE http://127.0.0.1:8081/api/employees/{id}
 
 ### Sales API
 
