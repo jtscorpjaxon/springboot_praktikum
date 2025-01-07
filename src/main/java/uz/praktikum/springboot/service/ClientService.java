@@ -21,10 +21,11 @@ public class ClientService {
         this.employeeService = employeeService;
     }
 
-    public Client save(Client client) {
+    public Client save(Authentication authentication,Client client) {
         if (
                 !clientRepository.existsByPassportJSHSHIR(client.getPassport().getJSHSHIR())
         ) {
+            client.setEmployee(employeeService.getEmployee(authentication));
             return clientRepository.save(client);
         }
         return clientRepository.findByPassportJSHSHIR(client.getPassport().getJSHSHIR());
@@ -53,6 +54,12 @@ public class ClientService {
         return null;
     }
 
+    public Client update(Authentication authentication, Client client) {
+        if (getAccess(authentication)) {
+            return clientRepository.save(client);
+        }
+        return null;
+    }
 
     public void delete(Authentication authentication, Long id) {
         if (getAccess(authentication)) {
@@ -61,7 +68,7 @@ public class ClientService {
             } else {
                 Client client = clientRepository.findById(id).orElseThrow();
                 client.setArchive(true);
-                save(client);
+                clientRepository.save(client);
             }
         }
     }

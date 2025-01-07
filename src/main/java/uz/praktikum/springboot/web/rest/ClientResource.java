@@ -32,17 +32,17 @@ public class ClientResource {
     }
 
     @PostMapping( "/clients")
-    public ResponseEntity createClient(Client clients) {
-        Client result = clientsService.save(clients);
+    public ResponseEntity createClient(Authentication authentication,Client clients) {
+        Client result = clientsService.save(authentication,clients);
         return ResponseEntity.ok(result);
     }
 
     @PutMapping( "/clients")
-    public ResponseEntity updateClient(@RequestBody Client clients) {
+    public ResponseEntity updateClient(Authentication authentication,@RequestBody Client clients) {
         if(clients.getId()==null){
             return ResponseEntity.badRequest().build();
         }
-        Client result = clientsService.save(clients);
+        Client result = clientsService.update(authentication,clients);
         return ResponseEntity.ok(result);
     }
 

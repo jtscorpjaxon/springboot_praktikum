@@ -19,7 +19,7 @@ public interface SalesRepository extends JpaRepository<Sales, Long> {
     Object[] findEmployeeMostAmountSales();
 
     //statistics last month count sales
-    @Query("SELECT count(s) FROM Sales s where s.createdAt > current_date - interval ('1') month")
+    @Query("SELECT count(s) FROM Sales s where s.beginDate > current_date - interval ('1') month")
     Integer statisticsLastMonthCountSales();
 
     //statistics last month count ended sales

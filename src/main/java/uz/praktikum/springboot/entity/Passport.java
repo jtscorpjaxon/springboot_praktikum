@@ -24,6 +24,7 @@ public class Passport implements Serializable {
         this.passportNumber = passportNumber;
         this.JSHSHIR = JSHSHIR;
         this.nation = nation;
+        this.birthday = birthday;
     }
 
     public Passport() {

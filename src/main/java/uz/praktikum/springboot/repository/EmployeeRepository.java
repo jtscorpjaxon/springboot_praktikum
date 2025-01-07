@@ -23,6 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findByLogin(String login);
     boolean existsByLogin(String login);
 
+    @Query("select sum(e.salary) from Employee e where e.activated = true")
     Float sumSalaryByActivatedTrue();
 
    // Group by count with department
