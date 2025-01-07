@@ -36,7 +36,7 @@ public class EmployeeService {
         if (getAccess(authentication)) {
             return employeeRepository.findAllByEmployeeStatus(EmployeeStatus.ACTIVE);
         } else {
-            return (List<Employee>) getEmployee(authentication);
+            return employeeRepository.findAllByLogin(authentication.getName());
         }
     }
 
