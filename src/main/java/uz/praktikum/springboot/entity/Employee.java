@@ -1,20 +1,16 @@
 package uz.praktikum.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import uz.praktikum.springboot.entity.enumration.EmployeePosition;
-import uz.praktikum.springboot.entity.enumration.EmployeeStatus;
-
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import org.hibernate.annotations.*;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import uz.praktikum.springboot.entity.enumration.EmployeePosition;
+import uz.praktikum.springboot.entity.enumration.EmployeeStatus;
 @Entity
 public class Employee implements Serializable {
     @Id
@@ -159,4 +155,11 @@ public class Employee implements Serializable {
     }
 
 
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
 }

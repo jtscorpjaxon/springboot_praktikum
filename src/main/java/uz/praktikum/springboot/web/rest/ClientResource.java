@@ -1,9 +1,10 @@
 package uz.praktikum.springboot.web.rest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import uz.praktikum.springboot.entity.Sales;
-import uz.praktikum.springboot.service.SalesService;
+import uz.praktikum.springboot.entity.Client;
+import uz.praktikum.springboot.service.ClientService;
 
 import java.util.List;
 
@@ -11,37 +12,43 @@ import java.util.List;
 @RequestMapping("/api")
 public class ClientResource {
 
-    private final SalesService salesService;
+    private final ClientService clientsService;
 
 
-    public ClientResource(SalesService salesService) {
-        this.salesService = salesService;
+    public ClientResource(ClientService clientsService) {
+        this.clientsService = clientsService;
     }
 
-    @GetMapping("/sales")
-    public ResponseEntity getSales() {
-        List<Sales> result = salesService.getSales();
+    @GetMapping("/clients")
+    public ResponseEntity getClients(Authentication authentication) {
+        List<Client> result = clientsService.findAll(authentication);
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping( "/sales")
-    public ResponseEntity createSales(Sales sales) {
-        Sales result = salesService.save(sales);
+    @GetMapping("/clients/{id}")
+    public ResponseEntity getClient(Authentication authentication,@PathVariable Long id) {
+        Client result = clientsService.findById(authentication,id);
         return ResponseEntity.ok(result);
     }
 
-    @PutMapping( "/sales")
-    public ResponseEntity updateSales(@RequestBody Sales sales) {
-        if(sales.getId()==null){
+    @PostMapping( "/clients")
+    public ResponseEntity createClient(Client clients) {
+        Client result = clientsService.save(clients);
+        return ResponseEntity.ok(result);
+    }
+
+    @PutMapping( "/clients")
+    public ResponseEntity updateClient(@RequestBody Client clients) {
+        if(clients.getId()==null){
             return ResponseEntity.badRequest().build();
         }
-        Sales result = salesService.save(sales);
+        Client result = clientsService.save(clients);
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("/sales/{id}")
-    public ResponseEntity deleteSales(@PathVariable Long id) {
-        salesService.delete(id);
+    @DeleteMapping("/clients/{id}")
+    public ResponseEntity deleteClient(Authentication authentication,@PathVariable Long id) {
+        clientsService.delete(authentication,id);
         return ResponseEntity.ok().build();
     }
 }

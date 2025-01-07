@@ -24,6 +24,12 @@ public class SalesResource {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/sales/{id}")
+    public ResponseEntity getSales(@PathVariable Long id) {
+        Sales result = salesService.getSales(id);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping( "/sales")
     public ResponseEntity createSales(Sales sales) {
         Sales result = salesService.save(sales);

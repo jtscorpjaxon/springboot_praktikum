@@ -1,9 +1,7 @@
 package uz.praktikum.springboot.service;
 
 import org.springframework.stereotype.Service;
-import uz.praktikum.springboot.entity.Department;
 import uz.praktikum.springboot.entity.Sales;
-import uz.praktikum.springboot.repository.DepartmentRepository;
 import uz.praktikum.springboot.repository.SalesRepository;
 
 import java.util.List;
@@ -27,5 +25,9 @@ public class SalesService {
 
     public List<Sales> getSales() {
         return salesRepository.findAll();
+    }
+
+    public Sales getSales(Long id) {
+        return salesRepository.findById(id).orElse(null);
     }
 }

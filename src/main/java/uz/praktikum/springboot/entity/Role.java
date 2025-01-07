@@ -1,11 +1,8 @@
 package uz.praktikum.springboot.entity;
 
-import uz.praktikum.springboot.entity.enumration.EmployeePosition;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.*;
 
 @Entity
 public class Role implements Serializable {

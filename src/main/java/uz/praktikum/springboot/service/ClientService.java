@@ -1,16 +1,13 @@
 package uz.praktikum.springboot.service;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.praktikum.springboot.entity.Client;
 import uz.praktikum.springboot.entity.Employee;
 import uz.praktikum.springboot.entity.enumration.EmployeePosition;
-import uz.praktikum.springboot.entity.enumration.EmployeeStatus;
 import uz.praktikum.springboot.repository.ClientRepository;
-import uz.praktikum.springboot.repository.EmployeeRepository;
 
-import javax.persistence.EntityNotFoundException;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +59,7 @@ public class ClientService {
             if (employeeService.getEmployee(authentication).getEmployeePosition() == EmployeePosition.DIRECTOR) {
                 clientRepository.deleteById(id);
             } else {
-                Client client = clientRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+                Client client = clientRepository.findById(id).orElseThrow();
                 client.setArchive(true);
                 save(client);
             }

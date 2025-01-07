@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/praktikum_springboot
-    username: admin
+    username: postgres
     password: 123456
 
   jpa:
@@ -11,5 +11,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     database: postgresql

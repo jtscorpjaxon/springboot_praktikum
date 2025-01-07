@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import uz.praktikum.springboot.entity.Role;
 import uz.praktikum.springboot.repository.RoleRepository;
 
-import java.util.Optional;
 
 @Service
 public class RoleService {

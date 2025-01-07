@@ -4,10 +4,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import uz.praktikum.springboot.entity.enumration.AdsType;
 
-import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 

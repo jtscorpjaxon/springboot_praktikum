@@ -2,9 +2,7 @@ package uz.praktikum.springboot.service;
 
 import org.springframework.stereotype.Service;
 import uz.praktikum.springboot.entity.Department;
-import uz.praktikum.springboot.entity.Role;
 import uz.praktikum.springboot.repository.DepartmentRepository;
-import uz.praktikum.springboot.repository.RoleRepository;
 
 @Service
 public class DepartmentService {

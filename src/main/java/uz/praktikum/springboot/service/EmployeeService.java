@@ -8,7 +8,6 @@ import uz.praktikum.springboot.entity.enumration.EmployeePosition;
 import uz.praktikum.springboot.entity.enumration.EmployeeStatus;
 import uz.praktikum.springboot.repository.EmployeeRepository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +65,7 @@ public class EmployeeService {
             if(getEmployee(authentication).getEmployeePosition()==EmployeePosition.DIRECTOR){
                 employeeRepository.deleteById(id);
             }else {
-                Employee employee = employeeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+                Employee employee = employeeRepository.findById(id).orElseThrow();
                 employee.setEmployeeStatus(EmployeeStatus.DRAFT);
                 save(employee);
             }

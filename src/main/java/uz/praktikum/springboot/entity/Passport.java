@@ -2,26 +2,23 @@ package uz.praktikum.springboot.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
+import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 
 @Entity
 public class Passport implements Serializable {
-    public Passport(String firstName, String lastName, String middleName, Integer age,
+    public Passport(String firstName, String lastName, String middleName, LocalDate birthday,
                     String address, String passportSerial, String passportNumber,
                     String JSHSHIR, String nation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
-        this.age = age;
         this.address = address;
         this.passportSerial = passportSerial;
         this.passportNumber = passportNumber;
@@ -51,10 +48,9 @@ public class Passport implements Serializable {
     @Column(length = 1, nullable = false)
     private String middleName;
 
-    @NotNull
-    @Min(2)
-    @Max(100)
-    private Integer age;
+
+    //Birtday
+    private LocalDate birthday;
 
     @NotNull
     @Size(min = 5, max = 255)
@@ -63,22 +59,22 @@ public class Passport implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(length = 5,  nullable = false)
+    @Column(length = 5, nullable = false)
     private String passportSerial;
 
     @NotNull
     @Size(min = 5, max = 10)
-    @Column(length = 5,  nullable = false)
+    @Column(length = 5, nullable = false)
     private String passportNumber;
 
     @NotNull
     @Size(min = 14, max = 16)
-    @Column(length = 20,  nullable = false)
+    @Column(length = 20, nullable = false)
     private String JSHSHIR;
 
     @NotNull
     @Size(min = 2, max = 20)
-    @Column(length = 20,  nullable = false)
+    @Column(length = 20, nullable = false)
     private String nation;
 
     @CreationTimestamp
@@ -147,6 +143,7 @@ public class Passport implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public @NotNull @Size(min = 2, max = 100) String getMiddleName() {
         return middleName;
     }
@@ -155,13 +152,27 @@ public class Passport implements Serializable {
         this.middleName = middleName;
     }
 
-    public @NotNull @Min(2) @Max(100) Integer getAge() {
-        return age;
+
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public void setAge(@NotNull @Min(2) @Max(100) Integer age) {
-        this.age = age;
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
+
+    public Integer getAge() {
+        if (birthday == null) {
+            return null; // Tug'ilgan sana bo'lmasa, null qaytaramiz
+        }
+
+        // Faqat yillarni qaytarish
+        return Period.between(
+                birthday,
+                LocalDate.now()
+        ).getYears();
+    }
+
 
     public @NotNull @Size(min = 5, max = 255) String getAddress() {
         return address;

@@ -2,63 +2,62 @@ package uz.praktikum.springboot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableMethodSecurity
+public class SecurityConfiguration {
+
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfiguration(@Lazy UserDetailsService userDetailsService) {
+    public SecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().headers().frameOptions().disable()
-                .and()
-                .authorizeRequests()
-                // Clients  API access control
-                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("CLIENTS_READ")
-                .antMatchers(HttpMethod.POST, "/api/clients").hasAuthority("CLIENTS_CREATE")
-                .antMatchers(HttpMethod.PUT, "/api/clients/**").hasAuthority("CLIENTS_UPDATE")
-                .antMatchers(HttpMethod.DELETE, "/api/clients/**").hasAuthority("CLIENTS_DELETE")
-                // Employees API access control
-                .antMatchers(HttpMethod.GET, "/api/employees").hasAuthority("EMPLOYEES_READ")
-                .antMatchers(HttpMethod.POST, "/api/employees").hasAuthority("EMPLOYEES_CREATE")
-                .antMatchers(HttpMethod.PUT, "/api/employees/**").hasAuthority("EMPLOYEES_UPDATE")
-                .antMatchers(HttpMethod.DELETE, "/api/employees/**").hasAuthority("EMPLOYEES_DELETE")
-                // Sales API access control
-                .antMatchers(HttpMethod.GET, "/api/sales").hasAuthority("SALES_READ")
-                .antMatchers(HttpMethod.POST, "/api/sales").hasAuthority("SALES_CREATE")
-                .antMatchers(HttpMethod.PUT, "/api/sales/**").hasAuthority("SALES_UPDATE")
-                .antMatchers(HttpMethod.DELETE, "/api/sales/**").hasAuthority("SALES_DELETE")
-                // Statistics API access control
-                .antMatchers("/api/statistics/clients").hasAuthority("CLIENTS_STATISTICS")
-                .antMatchers("/api/statistics/employees").hasAuthority("EMPLOYEES_STATISTICS")
-                .antMatchers("/api/statistics/sales").hasAuthority("SALES_STATISTICS")
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+                .csrf(csrf -> csrf.disable()) // CSRF ni o'chirish
+                .authorizeHttpRequests(auth -> auth
+                        // Clients API access control
+                        .requestMatchers(HttpMethod.GET, "/api/clients").hasAuthority("CLIENTS_READ")
+                        .requestMatchers(HttpMethod.POST, "/api/clients").hasAuthority("CLIENTS_CREATE")
+                        .requestMatchers(HttpMethod.PUT, "/api/clients/**").hasAuthority("CLIENTS_UPDATE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/clients/**").hasAuthority("CLIENTS_DELETE")
+                        // Employees API access control
+                        .requestMatchers(HttpMethod.GET, "/api/employees").hasAuthority("EMPLOYEES_READ")
+                        .requestMatchers(HttpMethod.POST, "/api/employees").hasAuthority("EMPLOYEES_CREATE")
+                        .requestMatchers(HttpMethod.PUT, "/api/employees/**").hasAuthority("EMPLOYEES_UPDATE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/employees/**").hasAuthority("EMPLOYEES_DELETE")
+                        // Sales API access control
+                        .requestMatchers(HttpMethod.GET, "/api/sales").hasAuthority("SALES_READ")
+                        .requestMatchers(HttpMethod.POST, "/api/sales").hasAuthority("SALES_CREATE")
+                        .requestMatchers(HttpMethod.PUT, "/api/sales/**").hasAuthority("SALES_UPDATE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/sales/**").hasAuthority("SALES_DELETE")
+                        // Statistics API access control
+                        .requestMatchers("/api/statistics/clients").hasAuthority("CLIENTS_STATISTICS")
+                        .requestMatchers("/api/statistics/employees").hasAuthority("EMPLOYEES_STATISTICS")
+                        .requestMatchers("/api/statistics/sales").hasAuthority("SALES_STATISTICS")
+                        .anyRequest().authenticated()
+                );
+        return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
