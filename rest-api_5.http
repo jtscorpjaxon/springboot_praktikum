@@ -120,21 +120,61 @@ Authorization: Basic "director_admin" "123456"
 
 ### Statistics employee API
 # @no-cookie-jar
-GET http://127.0.0.1:8081/api/statistics/employee
+GET http://127.0.0.1:8081/api/statistics/employes/department
 Authorization: Basic "director_admin" "123456"
 
 ### Statistics employee by age
-GET http://127.0.0.1:8081/api/statistics/employee/age/24
+GET http://127.0.0.1:8081/api/statistics/employees/age/24
 Authorization: Basic "director_admin" "123456"
 
 ### Statistics employee by salary
-GET http://127.0.0.1:8081/api/statistics/employee/salary
+GET http://127.0.0.1:8081/api/statistics/employees/salary
 Authorization: Basic "director_admin" "123456"
 
-### Statistics by client/daily-registered
+### Statistics by clients/daily-registered
 GET http://127.0.0.1:8081/api/statistics/clients/daily-registered
 Authorization: Basic "director_admin" "123456"
 
+### Statistics by clients/max-employees-registered
+
+GET http://127.0.0.1:8081/api/statistics/clients/max-employees-registered
+Authorization: Basic "director_admin" "123456"
 
 
+### Statistics by clients/top3-employees-registered
 
+GET http://127.0.0.1:8081/api/statistics/clients/top3-employees-registered
+Authorization: Basic "director_admin" "123456"
+
+
+### Statistics by clients/last-month-registered
+
+GET http://127.0.0.1:8081/api/statistics/clients/last-month-registered
+Authorization: Basic "director_admin" "123456"
+fill
+### Statistics by sales/sum-max-amount-ads-type
+
+GET http://127.0.0.1:8081/api/statistics/sales/sum-max-amount-ads-type
+Authorization: Basic "director_admin" "123456"
+
+
+### Statistics by sales/employees-most-amount-sales
+
+GET http://127.0.0.1:8081/api/statistics/sales/employees-most-amount-sales
+Authorization: Basic "director_admin" "123456"
+
+### Statistics by sales/last-month-count-sales
+
+GET http://127.0.0.1:8081/api/statistics/sales/last-month-count-sales
+Authorization: Basic "director_admin" "123456"
+
+
+### Statistics by sales/last-month-count-ended-sales
+
+GET http://127.0.0.1:8081/api/statistics/sales/last-month-count-ended-sales
+Authorization: Basic "director_admin" "123456"
+
+### Statistics by sales/ads-type-count-sales
+
+GET http://127.0.0.1:8081/api/statistics/sales/ads-type-count-sales
+Authorization: Basic "director_admin" "123456"
