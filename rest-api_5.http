@@ -132,7 +132,7 @@ GET http://127.0.0.1:8081/api/statistics/employee/salary
 Authorization: Basic "director_admin" "123456"
 
 ### Statistics by client/daily-registered
-GET http://127.0.0.1:8081/api/statistics/client/daily-registered
+GET http://127.0.0.1:8081/api/statistics/clients/daily-registered
 Authorization: Basic "director_admin" "123456"
 
 

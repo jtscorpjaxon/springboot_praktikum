@@ -19,37 +19,37 @@ public class StatisticsResource {
         this.statisticsService = statisticsService;
     }
 
-    @GetMapping("/statistics/employee")
+    @GetMapping("/statistics/employees/department")
     public ResponseEntity<List<Object[]>> getEmployeeStatisticsWithDepartment() {
         return ResponseEntity.ok(statisticsService.getEmployeeStatisticsWithDepartment());
     }
 
-    @GetMapping("/statistics/employee/age/{age}")
+    @GetMapping("/statistics/employees/age/{age}")
     public ResponseEntity<List<Employee>> getEmployeesWithAge(@PathVariable Integer age) {
         return ResponseEntity.ok(statisticsService.getEmployeesWithAge(age));
     }
 
-    @GetMapping("/statistics/employee/salary")
+    @GetMapping("/statistics/employees/salary")
     public ResponseEntity<Float> getSumSalaryByActivatedTrue() {
         return ResponseEntity.ok(statisticsService.getSumSalaryByActivatedTrue());
     }
 
-    @GetMapping("/statistics/client/daily-registered")
+    @GetMapping("/statistics/clients/daily-registered")
     public ResponseEntity<List<Object[]>> getClientStatisticsWithDailyRegistered() {
         return ResponseEntity.ok(statisticsService.getClientStatisticsWithDailyRegistered());
     }
 
-    @GetMapping("/statistics/client/max-employee-registered")
+    @GetMapping("/statistics/clients/max-employees-registered")
     public ResponseEntity<Object[]> getClientStatisticsWithMaxEmployeeRegistered() {
         return ResponseEntity.ok(statisticsService.getClientStatisticsWithMaxEmployeeRegistered());
     }
 
-    @GetMapping("/statistics/client/top3-employee-registered")
+    @GetMapping("/statistics/clients/top3-employees-registered")
     public ResponseEntity<List<Object[]>> getClientStatisticsWithTop3EmployeeRegistered() {
         return ResponseEntity.ok(statisticsService.getClientStatisticsWithTop3EmployeeRegistered());
     }
 
-    @GetMapping("/statistics/client/last-month-registered")
+    @GetMapping("/statistics/clients/last-month-registered")
     public ResponseEntity<Integer> getClientStatisticsByLastMonthRegistered() {
         return ResponseEntity.ok(statisticsService.getClientStatisticsByLastMonthRegistered());
     }
@@ -59,7 +59,7 @@ public class StatisticsResource {
         return ResponseEntity.ok(statisticsService.sumMaxAmountSalesFindAdsType());
     }
 
-    @GetMapping("/statistics/sales/employee-most-amount-sales")
+    @GetMapping("/statistics/sales/employees-most-amount-sales")
     public ResponseEntity<Object[]> findEmployeeMostAmountSales() {
         return ResponseEntity.ok(statisticsService.findEmployeeMostAmountSales());
     }
